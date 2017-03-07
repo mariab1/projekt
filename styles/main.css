@@ -8,6 +8,7 @@ nav {
     
 }
 
+
 body {
     background-image: url(testbackground2.png);
     font-family: "Heiti TC";
@@ -16,7 +17,8 @@ body {
 }
 
 .panel {
-    background-color: #d0d0d0;
+    /*background-color: #d0d0d0;*/
+    background-color: rgb(204, 159, 154);
     
     width: 35%;
     margin-top: 20%;
@@ -48,4 +50,43 @@ input, textarea {
 
 .pull-right {
 	float: right;
+}
+
+.pull-left {
+	float: left;
+}
+
+.columns {
+	width: 20%;
+	display: inline-block;
+	margin-right: 10%;	
+}
+
+.box {
+	width: 40%;
+	margin: 0 auto;
+	margin-top: 50px;
+
+}
+
+input, textarea {
+	width: 100%;
+	display: block;
+	padding: 5px;
+	border: none;
+	border-radius: 5px;
+	margin-top: 20px;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.column {
+	/*background-color:#eaeaea;*/
+	margin-top: 50px;
+	margin-bottom: 30px;
+	border-radius: 10px;	
+	padding: 10px;
+    background-color: rgb(204, 159, 154);
 }

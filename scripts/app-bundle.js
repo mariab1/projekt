@@ -5,8 +5,12 @@ define('app',['exports'], function (exports) {
     value: true
   });
   class App {
-    constructor() {
-      this.message = '';
+
+    configureRouter(config, router) {
+      this.router = router;
+      config.title = 'Aurelia';
+
+      config.map([{ route: ['', 'home'], name: 'home', moduleId: 'index' }, { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard', nav: true }]);
     }
   }
   exports.App = App;
@@ -21,6 +25,20 @@ define('environment',["exports"], function (exports) {
     debug: true,
     testing: true
   };
+});
+define('index',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    class Home {
+        constructor() {
+            this.message = "";
+        }
+
+    }
+    exports.Home = Home;
 });
 define('main',['exports', './environment'], function (exports, _environment) {
   'use strict';
@@ -70,9 +88,25 @@ define('resources/index',["exports"], function (exports) {
     //config.globalResources([]);
   }
 });
-define('dashboard',[], function () {
+define('dashboard',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    class Dashboard {
+        constructor() {
+            this.message = "";
+            this.bodyClass = "home";
+        }
+
+    }
+    exports.Dashboard = Dashboard;
+});
+define('export class Home {     constructor() {         this.message =""     }      }',[], function () {
   "use strict";
 });
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <body class=\"background-image\">\n        <nav class=\"navbar navbar-inverse\">\n            <div class=\"container-fluid\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-logo\">\n                    <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\"\n                    </a>\n                </div>\n            </div>\n        </nav>\n        <center>\n        <div class=\"panel\">\n            <h2>Are you making plans for your new home and want to store your ideas?</h2>\n            <h3>We've got you covered. Sign up and see yourself!</h3>\n            <form>\n                \n                <input name=\"reg_email\" type=\"text\" placeholder=\"email\">\n                <input name=\"reg_username\" type=\"text\" placeholder=\"username\">\n                <input name=\"reg_password\" type=\"text\" placeholder=\"password\">\n                <button type=\"submit\">Sign uppp</button> \n            </form>\n        </div>        \n        </center>\n    </body>\n</template>\n"; });
-define('text!dashboard.html', ['module'], function(module) { module.exports = ""; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n    <router-view></router-view>    \n</template>\n"; });
+define('text!index.html', ['module'], function(module) { module.exports = "<template>\n    \n    <body class=\"home\">\n        <nav class=\"navbar navbar-inverse\">\n            <div class=\"container-fluid\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-logo\">\n                    <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\"\n                    </a>\n                </div>\n            </div>\n        </nav>\n        <center>\n        <div class=\"panel\">\n            <h2>Are you making plans for your new home and want to store your ideas?</h2>\n            <h3>We've got you covered. Sign up and see yourself!</h3>\n            <form>\n                \n                <input name=\"reg_email\" type=\"text\" placeholder=\"email\">\n                <input name=\"reg_username\" type=\"text\" placeholder=\"username\">\n                <input name=\"reg_password\" type=\"text\" placeholder=\"password\">\n                <button type=\"submit\">Sign up</button> \n            </form>\n        </div>        \n        </center>\n    </body>\n</template>\n    "; });
+define('text!dashboard.html', ['module'], function(module) { module.exports = "<template>\n    <div>\n        <nav class=\"navbar navbar-inverse\">\n            <div class=\"container-fluid\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-logo\">\n                    <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\"\n                    </a>\n                </div>\n            </div>\n        </nav>\n            <div class=\"columns pull-left\">\n                <div class=\"column\">\n                    <h2>Hello, Reelika!</h2>\n                    \n                    <a href=\"\">Change your profile</a>\n                </div>\n            </div>\n        \n        <div class=\"column box\">\n            <center>\n            <form>\n                <p>Submit your interior idea</p>\n                <input type=\"file\" name=\"fileToUpload\">\n                <textarea placeholder=\"Add a link\"></textarea>\n                <textarea placeholder=\"Add additional notes\"></textarea>\n                <button type=\"submit\">Submit</button>\n            </form>\n            </center>\n        </div>\n    </div>\n\n</template>"; });
 //# sourceMappingURL=app-bundle.js.map
