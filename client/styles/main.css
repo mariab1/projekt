@@ -5,7 +5,6 @@ nav {
     left: 0px;
     right: 0px;
     top: 0px;
-    
 }
 
 
@@ -26,7 +25,7 @@ body {
     border-radius: 10px;
 }
 
-button {
+button, a.btn {
     background-color: #ff8c8c;
     font-size: 20px;
     color: white;
@@ -37,6 +36,7 @@ button {
     border: none;
     margin-top: 10px; 
     align-content: center;
+    text-decoration: none;
 }
 
 input, textarea {

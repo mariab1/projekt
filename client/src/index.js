@@ -1,9 +1,11 @@
+
 export class Home {
-    constructor() {
-        this.message =""
+    constructor(router) {
+        this.router = router;
+        this.message = "";
     }
 
-    login () {
-        alert(`Sum of ${this.username} and ${this.password} is ${this.email}`)
+    signup () {
+        this.router.navigateToRoute('signup');
     }
 }
