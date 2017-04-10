@@ -1,5 +1,6 @@
 var configForDevelopment = {
     loginRedirect: '/#welcome',
+    baseUrl: 'http://iplanner.dev',
     providers: {
 
         identSrv : {

@@ -3,18 +3,21 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
 @inject(Router)
-export default class{
-    constructor(router){
+export default class {
+    constructor(router) {
         this.router = router;
     }
-    configure(){
-        let appRouterConfig = function(config){
+
+    configure() {
+        let appRouterConfig = function(config) {
             config.title = 'Aurelia';
             config.addPipelineStep('authorize', AuthorizeStep); // Add a route filter to the authorize extensibility point.
             config.map([
                 { route: '', redirect: 'home' },
                 { route: 'home', name: 'home', moduleId: 'index' },
                 { route: 'signup', name: 'signup', moduleId: 'signup/signup', nav: true },
+                { route: 'login', moduleId: 'login/login', nav: false, title: 'Login' },
+                { route: 'logout', moduleId: 'logout/logout', nav: false, title: 'Logout' },
                 { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', nav: true, settings: { auth: true } }
             ]);
         };
