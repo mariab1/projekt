@@ -1,10 +1,10 @@
 let configForDevelopment = {
-    loginRedirect: 'welcome',
+    loginRedirect: '#/dashboard',
     baseUrl: 'http://iplanner.dev'
 };
 
 let configForProduction = {
-    loginRedirect: 'welcome',
+    loginRedirect: 'dashboard',
     baseUrl: 'http://iplanner.dev'
 };
 let config = configForProduction;

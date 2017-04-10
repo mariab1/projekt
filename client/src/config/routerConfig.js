@@ -18,8 +18,7 @@ export default class {
                 { route: 'signup', name: 'signup', moduleId: 'signup/signup', nav: false },
                 { route: 'login', moduleId: 'login/login', title: 'Login', nav: false },
                 { route: 'logout', moduleId: 'logout/logout', title: 'Logout', nav: false },
-                { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', auth: true , nav: true },
-                { route: 'welcome', name: 'welcome', moduleId: 'welcome/welcome',  auth: true, nav: true, }
+                { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', auth: true , nav: true }
             ]);
         };
         this.router.configure(appRouterConfig);
