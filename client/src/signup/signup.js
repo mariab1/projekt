@@ -4,17 +4,18 @@ import {AuthService} from 'aurelia-auth';
 @inject(AuthService)
 
 export class Signup {
+    name = '';
     email = '';
     password = '';
-    username = '';
 
     constructor(auth) {
         this.auth = auth;
     }
 
     signup() {
-        return this.auth.signup(this.username, this.email, this.password)
+        return this.auth.signup(this.name, this.email, this.password)
             .then((response) => {
+                console.log(response);
                 console.log("signed up");
             });
     }

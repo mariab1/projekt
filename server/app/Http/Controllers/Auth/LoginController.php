@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+            return $this->getAuthToken($request);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -67,5 +68,27 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Get API auth token
+     *
+     * @param $request
+     *
+     * @return mixed
+     */
+    private function getAuthToken($request)
+    {
+        $response = (new Client())->post('http://iplanner.dev/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => '2',
+                'client_secret' => 'HZAsiliLBXxOzIq2I0FVldGE7aYlPUuWyWTfYt6s',
+                'username' => $request->email,
+                'password' => $request->password,
+                'scope' => '',
+            ],
+        ]);
+        return json_decode((string) $response->getBody(), true);
     }
 }

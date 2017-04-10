@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $http = new Client();
+
+        $response = $http->post('http://iplanner.dev/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => '2',
+                'client_secret' => 'HZAsiliLBXxOzIq2I0FVldGE7aYlPUuWyWTfYt6s',
+                'username' => 'martin@skydive.ee',
+                'password' => 'asdasd',
+                'scope' => '',
+            ],
+        ]);
+
+        return json_decode((string) $response->getBody(), true);
     }
 }

@@ -1,22 +1,20 @@
-import {inject} from 'aurelia-framework';
 import {AuthService} from 'aurelia-auth';
+import {inject} from 'aurelia-framework';
 
 @inject(AuthService)
 
 export class Logout {
-    email = '';
-    password = '';
-    username = '';
+    constructor(authService) {
+        this.authService = authService;
+    };
 
-    constructor(auth) {
-        this.auth = auth;
-    }
-
-    signup() {
-        return this.auth.signup(this.username, this.email, this.password)
-            .then((response) => {
-                console.log("signed up");
+    activate() {
+        this.authService.logout("#/login")
+            .then(response => {
+                console.log("ok logged out on  logout.js");
+            })
+            .catch(err => {
+                console.log("error logged out  logout.js");
             });
     }
-
 }

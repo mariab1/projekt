@@ -39,6 +39,10 @@ button, a.btn {
     text-decoration: none;
 }
 
+.text-center {
+    text-align: center;
+}
+
 input, textarea {
 	width: 60%;
 	display: block;

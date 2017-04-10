@@ -27,5 +27,9 @@ export function configure(aurelia) {
           baseConfig.configure(authConfig);
       });
 
+  aurelia.use
+      .plugin('aurelia-bootstrap')
+      .feature('resources');
+
   aurelia.start().then(() => aurelia.setRoot());
 }

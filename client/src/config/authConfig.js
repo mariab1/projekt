@@ -1,5 +1,5 @@
-var configForDevelopment = {
-    loginRedirect: '/#welcome',
+let configForDevelopment = {
+    loginRedirect: 'welcome',
     baseUrl: 'http://iplanner.dev',
     providers: {
 
@@ -22,27 +22,11 @@ var configForDevelopment = {
             clientId: 'jsclient',
 
             popupOptions: { width: 452, height: 633 }
-        },
-
-        google: {
-            //responseType :'code',
-            clientId: '239531826023-ibk10mb9p7ull54j55a61og5lvnjrff6.apps.googleusercontent.com',
-            state: function(){
-                var val = ((Date.now() + Math.random()) * Math.random()).toString().replace(".", "");
-                return encodeURIComponent(val);
-            }
-        }
-        ,
-        linkedin:{
-            clientId:'778mif8zyqbei7'
-        },
-        facebook:{
-            clientId:'1452782111708498'
         }
     }
 };
 
-var configForProduction = {
+let configForProduction = {
     providers: {
         google: {
             clientId: '239531826023-3ludu3934rmcra3oqscc1gid3l9o497i.apps.googleusercontent.com'
@@ -57,13 +41,12 @@ var configForProduction = {
 
     }
 };
-var config ;
+let config;
 if (window.location.hostname==='localhost') {
     config = configForDevelopment;
 }
-else{
+else {
     config = configForProduction;
 }
-
 
 export default config;

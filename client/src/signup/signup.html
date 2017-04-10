@@ -1,12 +1,33 @@
 <template>
-    <center>
-    <div class="panel au-animate">
-        <form role="form" submit.delegate="signup()">
-            <input name="username" type="text" placeholder="username" value.bind="username" required autofocus>
-            <input name="password" type="password" placeholder="password" value.bind="password" required>
-            <input name="email" type="text" placeholder="email" value.bind="email" required>
-            <button type="submit" class="btn">Sign up and see yourself!</button>
-        </form>
+    <div class="container">
+        <div class="row">
+            <div class="panel col-md-6">
+                <div class="panel-body">
+                    <h2>Sign Up!</h2>
+                    <form method="post" name="signupForm" submit.delegate="signup()">
+                        <div class="form-group has-feedback">
+                            <input class="form-control input-lg" type="text" name="name" value.bind="name" placeholder="Your name" required autofocus>
+                            <span class="ion-at form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input class="form-control input-lg" type="email" name="email" value.bind="email" placeholder="Your e-mail address" required autofocus>
+                            <span class="ion-at form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input class="form-control input-lg" type="password" name="password" value.bind="password" placeholder="Password" required>
+                            <span class="ion-key form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input class="form-control input-lg" type="password" name="password" value.bind="password" placeholder="Repeat password" required>
+                            <span class="ion-key form-control-feedback"></span>
+                        </div>
+                        <button type="submit" class="btn btn-lg  btn-block btn-success">Sign up</button>
+                        <p class="text-center text-muted">
+                            <small>Already have an account? <a href="/#/login">Login</a></small>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    </center>
 </template>

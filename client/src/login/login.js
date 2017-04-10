@@ -21,11 +21,4 @@ export class Login {
                 });
             });
     };
-
-    authenticate(name) {
-        return this.auth.authenticate(name, false, null)
-            .then((response) => {
-
-            });
-    }
 }

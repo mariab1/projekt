@@ -15,16 +15,12 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//Auth::routes();
+Auth::routes();
 
 /**
  * Authentication
  */
 Route::post('auth/login', 'Auth\LoginController@login');
-Route::post('auth/signup', 'Auth\RegisterController@login');
+Route::post('auth/signup', 'Auth\RegisterController@register');
 
 Route::get('/home', 'HomeController@index');
