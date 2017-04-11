@@ -5,15 +5,11 @@ nav {
     left: 0px;
     right: 0px;
     top: 0px;
- 
 }
-
 
 body {
     background-image: url(testbackground2.png);
     font-family: "Heiti TC";
-    
-    
 }
 
 .panel {
@@ -37,6 +33,13 @@ body {
     border-color: black;
 }
 
+.delete-item {
+    cursor: pointer;
+}
+
+.delete-item:hover {
+    text-decoration: underline;
+}
 
 button, a.btn {
     /*background-color: #ff8c8c;*/

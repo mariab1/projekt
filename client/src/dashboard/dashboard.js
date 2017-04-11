@@ -31,7 +31,15 @@ export class Dashboard {
     }
 
     deleteIdea(id) {
-        console.log(id);
+        if(confirm('oled kindel, et soovid seda ideed kustutada?')) {
+            this.httpClient.fetch('http://iplanner.dev/api/ideas/' + id, {
+                method: "DELETE"
+            })
+                .then(resp => {
+                    console.log(resp);
+                    //this.ideas.push(savedIdea);
+                });
+        }
     }
 
     submitIdea() {

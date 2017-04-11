@@ -33,7 +33,7 @@ class IdeaController extends Controller
      */
     public function store(Request $request)
     {
-        return Idea::create(array_merge($request->all(), ['user_id' => '1']));
+        return Idea::create($request->all());
     }
 
     /**
@@ -78,6 +78,7 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea)
     {
-        //
+        $idea->delete();
+        return response('ok');
     }
 }
