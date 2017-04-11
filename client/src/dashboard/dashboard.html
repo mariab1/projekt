@@ -20,13 +20,14 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
-        <div class="idea-list" repeat.for="idea of ideas">
+        <div class="box idea-list-item" repeat.for="idea of ideas">
             <div>
                 <b>Idea #${idea.id}</b>
                 <div>
                     <a href="${idea.link}" target="_blank" class="link">${idea.link}</a>
                 </div>
                 <div>${idea.notes}</div>
+                <div class="text-right" click.delegate="deleteIdea(idea.id)">kustuta</div>
             </div>
         </div>
     </div>

@@ -27,6 +27,16 @@ body {
     border-color: black;
 }
 
+.idea-list-item {
+    background-color:  #f1f1f1;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border-color: black;
+}
+
 
 button, a.btn {
     /*background-color: #ff8c8c;*/
@@ -45,6 +55,9 @@ button, a.btn {
 
 .text-center {
     text-align: center;
+}
+.text-right {
+    text-align: right;
 }
 
 input, textarea {

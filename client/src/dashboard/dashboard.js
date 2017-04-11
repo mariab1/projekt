@@ -30,6 +30,10 @@ export class Dashboard {
             });
     }
 
+    deleteIdea(id) {
+        console.log(id);
+    }
+
     submitIdea() {
         let idea = {
             link: this.link,
