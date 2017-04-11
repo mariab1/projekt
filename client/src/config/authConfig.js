@@ -1,6 +1,7 @@
 let configForDevelopment = {
     loginRedirect: '#/dashboard',
-    baseUrl: 'http://iplanner.dev'
+    baseUrl: 'http://iplanner.dev',
+    profileUrl: '/api/user',
 };
 
 let configForProduction = {

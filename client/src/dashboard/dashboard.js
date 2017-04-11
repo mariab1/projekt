@@ -15,6 +15,10 @@ export class Dashboard {
         this.auth = auth;
         this.httpClient = new HttpClient();
         this.getData();
+
+        auth.getMe().then(data => {
+            this.user = data;
+        });
     }
 
     getData() {
@@ -30,7 +34,8 @@ export class Dashboard {
         let idea = {
             link: this.link,
             price: this.price,
-            notes: this.notes
+            notes: this.notes,
+            user_id: this.user.id
         };
 
         this.httpClient.fetch('http://iplanner.dev/api/ideas', {
