@@ -1,10 +1,18 @@
-define('app',['exports', 'aurelia-framework', 'aurelia-router', 'aurelia-auth'], function (exports, _aureliaFramework, _aureliaRouter, _aureliaAuth) {
+define('app',['exports', 'aurelia-framework', 'aurelia-router', 'aurelia-auth', 'config/routerConfig'], function (exports, _aureliaFramework, _aureliaRouter, _aureliaAuth, _routerConfig) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
     exports.App = undefined;
+
+    var _routerConfig2 = _interopRequireDefault(_routerConfig);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -14,48 +22,22 @@ define('app',['exports', 'aurelia-framework', 'aurelia-router', 'aurelia-auth'],
 
     var _dec, _class;
 
-    var App = exports.App = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _aureliaAuth.FetchConfig), _dec(_class = function () {
-        function App(router, fetchConfig) {
+    var App = exports.App = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _aureliaAuth.FetchConfig, _routerConfig2.default), _dec(_class = function () {
+        function App(router, fetchConfig, appRouterConfig) {
             _classCallCheck(this, App);
 
             this.router = router;
-
+            this.appRouterConfig = appRouterConfig;
             this.fetchConfig = fetchConfig;
         }
 
         App.prototype.activate = function activate() {
+            this.appRouterConfig.configure();
             this.fetchConfig.configure();
-        };
-
-        App.prototype.configureRouter = function configureRouter(config, router) {
-            this.router = router;
-            config.title = 'Aurelia';
-
-            config.map([{ route: ['', 'home'], name: 'home', moduleId: 'index' }, { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard', nav: true }]);
         };
 
         return App;
     }()) || _class);
-});
-define('dashboard',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var Dashboard = exports.Dashboard = function Dashboard() {
-        _classCallCheck(this, Dashboard);
-
-        this.message = "";
-        this.bodyClass = "home";
-    };
 });
 define('environment',["exports"], function (exports) {
   "use strict";
@@ -82,14 +64,15 @@ define('index',["exports"], function (exports) {
     }
 
     var Home = exports.Home = function () {
-        function Home() {
+        function Home(router) {
             _classCallCheck(this, Home);
 
+            this.router = router;
             this.message = "";
         }
 
-        Home.prototype.login = function login() {
-            alert("Sum of " + this.username + " and " + this.password + " is " + this.email);
+        Home.prototype.signup = function signup() {
+            this.router.navigateToRoute('signup');
         };
 
         return Home;
@@ -139,6 +122,127 @@ define('main',['exports', './environment', 'config/authConfig'], function (expor
     });
   }
 });
+define('components/navbar',['exports', 'aurelia-framework', 'aurelia-auth'], function (exports, _aureliaFramework, _aureliaAuth) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Navbar = undefined;
+
+    function _initDefineProp(target, property, descriptor, context) {
+        if (!descriptor) return;
+        Object.defineProperty(target, property, {
+            enumerable: descriptor.enumerable,
+            configurable: descriptor.configurable,
+            writable: descriptor.writable,
+            value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+        });
+    }
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _createClass = function () {
+        function defineProperties(target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
+                descriptor.enumerable = descriptor.enumerable || false;
+                descriptor.configurable = true;
+                if ("value" in descriptor) descriptor.writable = true;
+                Object.defineProperty(target, descriptor.key, descriptor);
+            }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+            if (protoProps) defineProperties(Constructor.prototype, protoProps);
+            if (staticProps) defineProperties(Constructor, staticProps);
+            return Constructor;
+        };
+    }();
+
+    function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+        var desc = {};
+        Object['ke' + 'ys'](descriptor).forEach(function (key) {
+            desc[key] = descriptor[key];
+        });
+        desc.enumerable = !!desc.enumerable;
+        desc.configurable = !!desc.configurable;
+
+        if ('value' in desc || desc.initializer) {
+            desc.writable = true;
+        }
+
+        desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+            return decorator(target, property, desc) || desc;
+        }, desc);
+
+        if (context && desc.initializer !== void 0) {
+            desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+            desc.initializer = undefined;
+        }
+
+        if (desc.initializer === void 0) {
+            Object['define' + 'Property'](target, property, desc);
+            desc = null;
+        }
+
+        return desc;
+    }
+
+    function _initializerWarningHelper(descriptor, context) {
+        throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+    }
+
+    var _dec, _class, _desc, _value, _class2, _descriptor;
+
+    var Navbar = exports.Navbar = (_dec = (0, _aureliaFramework.inject)(_aureliaAuth.AuthService, _aureliaFramework.BindingEngine), _dec(_class = (_class2 = function () {
+        function Navbar(auth, bindingEngine) {
+            var _this = this;
+
+            _classCallCheck(this, Navbar);
+
+            this._isAuthenticated = false;
+            this.displayName = "";
+
+            _initDefineProp(this, 'router', _descriptor, this);
+
+            this.subscription = {};
+
+            this.auth = auth;
+            this.bindingEngine = bindingEngine;
+            this._isAuthenticated = this.auth.isAuthenticated();
+            this.subscription = bindingEngine.propertyObserver(this, 'isAuthenticated').subscribe(function (newValue, oldValue) {
+                if (_this.isAuthenticated) {
+                    _this.auth.getMe().then(function (data) {
+                        return _this.displayName = data.displayName;
+                    });
+                }
+            });
+        }
+
+        Navbar.prototype.deactivate = function deactivate() {
+            this.subscription.dispose();
+        };
+
+        _createClass(Navbar, [{
+            key: 'isAuthenticated',
+            get: function get() {
+                return this.auth.isAuthenticated();
+            }
+        }]);
+
+        return Navbar;
+    }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'router', [_aureliaFramework.bindable], {
+        enumerable: true,
+        initializer: function initializer() {
+            return null;
+        }
+    })), _class2)) || _class);
+});
 define('config/authConfig',['exports'], function (exports) {
     'use strict';
 
@@ -146,66 +250,17 @@ define('config/authConfig',['exports'], function (exports) {
         value: true
     });
     var configForDevelopment = {
-        loginRedirect: '/#welcome',
-        providers: {
-
-            identSrv: {
-                name: 'identSrv',
-                url: '/auth/identSrv',
-                authorizationEndpoint: 'http://localhost:22530/connect/authorize',
-                redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-                scope: ['profile', 'openid'],
-
-                responseType: 'code',
-
-                scopePrefix: '',
-                scopeDelimiter: ' ',
-                requiredUrlParams: ['scope', 'nonce'],
-                optionalUrlParams: ['display', 'state'],
-                display: 'popup',
-                type: '2.0',
-                clientId: 'jsclient',
-
-                popupOptions: { width: 452, height: 633 }
-            },
-
-            google: {
-                clientId: '239531826023-ibk10mb9p7ull54j55a61og5lvnjrff6.apps.googleusercontent.com',
-                state: function state() {
-                    var val = ((Date.now() + Math.random()) * Math.random()).toString().replace(".", "");
-                    return encodeURIComponent(val);
-                }
-            },
-
-            linkedin: {
-                clientId: '778mif8zyqbei7'
-            },
-            facebook: {
-                clientId: '1452782111708498'
-            }
-        }
+        loginRedirect: '#/dashboard',
+        baseUrl: 'http://iplanner.dev'
     };
 
     var configForProduction = {
-        providers: {
-            google: {
-                clientId: '239531826023-3ludu3934rmcra3oqscc1gid3l9o497i.apps.googleusercontent.com'
-            },
-
-            linkedin: {
-                clientId: '7561959vdub4x1'
-            },
-            facebook: {
-                clientId: '1653908914832509'
-            }
-
-        }
+        loginRedirect: 'dashboard',
+        baseUrl: 'http://iplanner.dev'
     };
-    var config;
+    var config = configForProduction;
     if (window.location.hostname === 'localhost') {
         config = configForDevelopment;
-    } else {
-        config = configForProduction;
     }
 
     exports.default = config;
@@ -237,10 +292,8 @@ define('config/routerConfig',['exports', 'aurelia-auth', 'aurelia-framework', 'a
             var appRouterConfig = function appRouterConfig(config) {
                 config.title = 'Aurelia';
                 config.addPipelineStep('authorize', _aureliaAuth.AuthorizeStep);
-
-                config.map([{ route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Welcome' }, { route: 'customer', moduleId: './customer', nav: true, title: 'CRM', auth: true }, { route: 'customer2', moduleId: './customer2', nav: true, title: 'CRM Custom', auth: true }, { route: 'signup', moduleId: './signup', nav: false, title: 'Signup' }, { route: 'login', moduleId: './login', nav: false, title: 'Login' }, { route: 'logout', moduleId: './logout', nav: false, title: 'Logout' }, { route: 'profile', moduleId: './profile', nav: false, title: 'Profile' }, { route: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' }, { route: 'users', name: 'users', moduleId: './users', nav: false, title: 'Github Users' }]);
+                config.map([{ route: '', redirect: 'home', nav: false }, { route: 'home', name: 'home', moduleId: 'index', nav: false }, { route: 'signup', name: 'signup', moduleId: 'signup/signup', nav: false }, { route: 'login', moduleId: 'login/login', title: 'Login', nav: false }, { route: 'logout', moduleId: 'logout/logout', title: 'Logout', nav: false }, { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', auth: true, nav: true }]);
             };
-
             this.router.configure(appRouterConfig);
         };
 
@@ -248,6 +301,123 @@ define('config/routerConfig',['exports', 'aurelia-auth', 'aurelia-framework', 'a
     }()) || _class);
 
     exports.default = _default;
+});
+define('dashboard/dashboard',['exports', 'aurelia-framework', 'aurelia-auth', 'aurelia-fetch-client'], function (exports, _aureliaFramework, _aureliaAuth, _aureliaFetchClient) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Dashboard = undefined;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _dec, _class;
+
+    var Dashboard = exports.Dashboard = (_dec = (0, _aureliaFramework.inject)(_aureliaAuth.AuthService), _dec(_class = function () {
+        function Dashboard(auth) {
+            _classCallCheck(this, Dashboard);
+
+            this.auth = auth;
+            this.httpClient = new _aureliaFetchClient.HttpClient();
+        }
+
+        Dashboard.prototype.submitIdea = function submitIdea() {
+            var idea = {
+                link: this.link,
+                price: this.price,
+                notes: this.notes
+            };
+
+            this.httpClient.fetch('http://iplanner.dev/api/ideas/store', {
+                method: "POST",
+                body: JSON.stringify(idea)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log(data);
+            });
+        };
+
+        return Dashboard;
+    }()) || _class);
+});
+define('login/login',['exports', 'aurelia-auth', 'aurelia-framework'], function (exports, _aureliaAuth, _aureliaFramework) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Login = undefined;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _dec, _class;
+
+    var Login = exports.Login = (_dec = (0, _aureliaFramework.inject)(_aureliaAuth.AuthService), _dec(_class = function () {
+        function Login(auth) {
+            _classCallCheck(this, Login);
+
+            this.email = '';
+            this.password = '';
+
+            this.auth = auth;
+        }
+
+        Login.prototype.login = function login() {
+            return this.auth.login(this.email, this.password).then(function (response) {
+                console.log("success logged " + response);
+            }).catch(function (err) {
+                err.json().then(function (e) {
+                    console.log("login failure : " + e.message);
+                });
+            });
+        };
+
+        return Login;
+    }()) || _class);
+});
+define('logout/logout',['exports', 'aurelia-auth', 'aurelia-framework'], function (exports, _aureliaAuth, _aureliaFramework) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Logout = undefined;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _dec, _class;
+
+    var Logout = exports.Logout = (_dec = (0, _aureliaFramework.inject)(_aureliaAuth.AuthService), _dec(_class = function () {
+        function Logout(authService) {
+            _classCallCheck(this, Logout);
+
+            this.authService = authService;
+        }
+
+        Logout.prototype.activate = function activate() {
+            this.authService.logout("#/login").then(function (response) {
+                console.log("ok logged out on  logout.js");
+            }).catch(function (err) {
+                console.log("error logged out  logout.js");
+            });
+        };
+
+        return Logout;
+    }()) || _class);
 });
 define('resources/index',["exports"], function (exports) {
     "use strict";
@@ -257,6 +427,43 @@ define('resources/index',["exports"], function (exports) {
     });
     exports.configure = configure;
     function configure(config) {}
+});
+define('signup/signup',['exports', 'aurelia-framework', 'aurelia-auth'], function (exports, _aureliaFramework, _aureliaAuth) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Signup = undefined;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _dec, _class;
+
+    var Signup = exports.Signup = (_dec = (0, _aureliaFramework.inject)(_aureliaAuth.AuthService), _dec(_class = function () {
+        function Signup(auth) {
+            _classCallCheck(this, Signup);
+
+            this.name = '';
+            this.email = '';
+            this.password = '';
+
+            this.auth = auth;
+        }
+
+        Signup.prototype.signup = function signup() {
+            return this.auth.signup(this.name, this.email, this.password).then(function (response) {
+                console.log(response);
+                console.log("signed up");
+            });
+        };
+
+        return Signup;
+    }()) || _class);
 });
 define('aurelia-auth/auth-service',['exports', 'aurelia-dependency-injection', 'aurelia-fetch-client', 'aurelia-event-aggregator', './authentication', './base-config', './oAuth1', './oAuth2', './auth-utilities'], function (exports, _aureliaDependencyInjection, _aureliaFetchClient, _aureliaEventAggregator, _authentication, _baseConfig, _oAuth, _oAuth2, _authUtilities) {
   'use strict';
@@ -1584,7 +1791,11 @@ define('aurelia-auth/auth-filter',["exports"], function (exports) {
     return AuthFilterValueConverter;
   }();
 });
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n    <router-view></router-view>    \n</template>\n"; });
-define('text!dashboard.html', ['module'], function(module) { module.exports = "<template>\n    <div>\n        <nav class=\"navbar navbar-inverse\">\n            <div class=\"container-fluid\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-logo\">\n                    <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\">\n                    </a>\n                </div>\n            </div>\n        </nav>\n            <div class=\"columns pull-left\">\n                <div class=\"column\">\n                    <h2>Hello, Reelika!</h2>\n                    <a href=\"\">Create a new project</a>\n                    <p>Your projects:</p>\n                    <a href=\"\">My Apartment</a>\n                    <a href=\"\">Maria's home</a>\n                    <!--<a href=\"\">Change your profile</a>-->\n                </div>\n            </div>\n        \n        <div class=\"column box\">\n            <center>\n            <form>\n                <p>Submit your interior idea</p>\n                <input type=\"file\" name=\"fileToUpload\">\n                <textarea placeholder=\"Add a link\"></textarea>\n                <textarea placeholder=\"Price\"></textarea>\n                <textarea placeholder=\"Add additional notes\"></textarea>\n                <button type=\"submit\">Submit</button>\n            </form>\n            </center>\n        </div>\n    </div>\n\n</template>"; });
-define('text!index.html', ['module'], function(module) { module.exports = "<template>\n    \n    <body class=\"home\">\n        <nav class=\"navbar navbar-inverse\">\n            <div class=\"container-fluid\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-logo\">\n                        <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\">\n                    </a>\n                </div>\n            </div>\n        </nav>\n        <center>\n        <div class=\"panel\">\n            <h2>Are you making plans for your new home and want to store your ideas?</h2>\n            <h3>We've got you covered. Sign up and see yourself!</h3>\n            <form>\n                <input name=\"username\" type=\"text\" placeholder=\"username\" value.bind=\"username\" required autofocus>\n                <input name=\"password\" type=\"password\" placeholder=\"password\" value.bind=\"password\" required>\n                <input name=\"email\" type=\"text\" placeholder=\"email\" value.bind=\"email\" required>\n                <button type=\"submit\">Sign up</button>\n            </form>\n        </div>        \n        </center>\n    </body>\n</template>\n    "; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n    <body class=\"home\">\n        <require from='./components/navbar'></require>\n        <navbar router.bind=\"router\"></navbar>\n        <router-view></router-view>\n    </body>\n</template>"; });
+define('text!index.html', ['module'], function(module) { module.exports = "<template>\n        <center>\n        <div class=\"panel\">\n            <h2>Are you making plans for your new home and want to store your ideas?</h2>\n            <h3>We've got you covered.</h3>\n            <a href=\"/#/signup\" class=\"btn\">Sign up and see yourself!</a>\n        </div>        \n        </center>\n</template>"; });
+define('text!components/navbar.html', ['module'], function(module) { module.exports = "<template>\n    <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\">\n        <!-- <require from=\"paulvanbladel/aurelia-auth\"></require> -->\n        <div class=\"navbar-header\">\n            <a class=\"navbar-logo navbar-brand\" href=\"#\">\n                <img alt=\"Logo\" src=\"styles/logo2.png\" height=\"40px\">\n            </a>\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n            <ul class=\"nav navbar-nav\">\n                <li repeat.for=\"row of router.navigation | authFilter: isAuthenticated\" class=\"${row.isActive ? 'active' : ''}\">\n                    <a data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1.in\" href.bind=\"row.href\">${row.title}</a>\n                </li>\n            </ul>\n\n            <ul if.bind=\"!isAuthenticated\" class=\"nav navbar-nav navbar-right\">\n                <li><a href=\"/#/login\">Login</a></li>\n                <li><a href=\"/#/signup\">Sign up</a></li>\n            </ul>\n            <ul if.bind=\"isAuthenticated\" class=\"nav navbar-nav navbar-right\">\n                <li><a href=\"/#/dashboard\">Dashboard ${displayName}</a></li>\n                <li><a href=\"/#/logout\">Logout</a></li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li class=\"loader\" if.bind=\"router.isNavigating\">\n                    <i class=\"fa fa-spinner fa-spin fa-2x\"></i>\n                </li>\n            </ul>\n        </div>\n    </nav>\n</template>"; });
+define('text!dashboard/dashboard.html', ['module'], function(module) { module.exports = "<template>\n    <div style=\"margin-top: 200px;\">\n        <div class=\"columns pull-left\">\n            <div class=\"column\">\n                <h2>Hello, Reelika!</h2>\n                <a href=\"\">Create a new project</a>\n                <p>Your projects:</p>\n                <a href=\"\">My Apartment</a>\n                <a href=\"\">Maria's home</a>\n            </div>\n        </div>\n        \n        <div class=\"column box\">\n            <form submit.delegate=\"submitIdea()\">\n                <p>Submit your interior idea</p>\n                <input type=\"file\" name=\"fileToUpload\">\n                <textarea placeholder=\"Add a link\" value.bind=\"link\"></textarea>\n                <textarea placeholder=\"Price\" value.bind=\"price\"></textarea>\n                <textarea placeholder=\"Add additional notes\" value.bind=\"notes\"></textarea>\n                <button type=\"submit\">Submit</button>\n            </form>\n        </div>\n    </div>\n\n</template>"; });
+define('text!login/login.html', ['module'], function(module) { module.exports = "<template>\n    <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"panel col-md-6\">\n                <div class=\"panel-body\">\n                    <h2>Log in</h2>\n                    <form method=\"post\" name=\"loginForm\">\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"text\" name=\"email\" value.bind=\"email\" placeholder=\"Your e-mail address\" required autofocus>\n                            <span class=\"ion-at form-control-feedback\"></span>\n                        </div>\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"password\" name=\"password\" value.bind=\"password\" placeholder=\"Password\" required>\n                            <span class=\"ion-key form-control-feedback\"></span>\n                        </div>\n                        <button type=\"submit\" click.delegate=\"login()\" class=\"btn btn-lg  btn-block btn-success\">Log in</button>\n                        <p class=\"text-center text-muted\">\n                            <small>Don't have an account yet? <a href=\"/#/signup\">Sign up</a></small>\n                        </p>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n</template>"; });
+define('text!logout/logout.html', ['module'], function(module) { module.exports = "<template>\n    <section class=\"au-animate\">\n    </section>\n</template>"; });
+define('text!signup/signup.html', ['module'], function(module) { module.exports = "<template>\n    <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"panel col-md-6\">\n                <div class=\"panel-body\">\n                    <h2>Sign Up!</h2>\n                    <form method=\"post\" name=\"signupForm\" submit.delegate=\"signup()\">\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"text\" name=\"name\" value.bind=\"name\" placeholder=\"Your name\" required autofocus>\n                            <span class=\"ion-at form-control-feedback\"></span>\n                        </div>\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"email\" name=\"email\" value.bind=\"email\" placeholder=\"Your e-mail address\" required autofocus>\n                            <span class=\"ion-at form-control-feedback\"></span>\n                        </div>\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"password\" name=\"password\" value.bind=\"password\" placeholder=\"Password\" required>\n                            <span class=\"ion-key form-control-feedback\"></span>\n                        </div>\n                        <div class=\"form-group has-feedback\">\n                            <input class=\"form-control input-lg\" type=\"password\" name=\"password\" value.bind=\"password\" placeholder=\"Repeat password\" required>\n                            <span class=\"ion-key form-control-feedback\"></span>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-lg  btn-block btn-success\">Sign up</button>\n                        <p class=\"text-center text-muted\">\n                            <small>Already have an account? <a href=\"/#/login\">Login</a></small>\n                        </p>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n</template>"; });
 //# sourceMappingURL=app-bundle.js.map

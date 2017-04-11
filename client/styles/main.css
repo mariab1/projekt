@@ -19,8 +19,10 @@ body {
     /*background-color: #d0d0d0;*/
     background-color: rgb(204, 159, 154);
     
-    width: 35%;
-    margin-top: 20%;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
     padding: 10px;
     border-radius: 10px;
 }
