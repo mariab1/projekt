@@ -20,6 +20,15 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+        <div class="idea-list" repeat.for="idea of ideas">
+            <div>
+                <b>Idea #${idea.id}</b>
+                <div>
+                    <a href="${idea.link}" target="_blank" class="link">${idea.link}</a>
+                </div>
+                <div>${idea.notes}</div>
+            </div>
+        </div>
     </div>
 
 </template>

@@ -9,10 +9,21 @@ export class Dashboard {
     link;
     price;
     notes;
+    ideas = [];
 
     constructor(auth) {
         this.auth = auth;
         this.httpClient = new HttpClient();
+        this.getData();
+    }
+
+    getData() {
+        this.httpClient.fetch('http://iplanner.dev/api/ideas')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.ideas = data;
+            });
     }
 
     submitIdea() {
@@ -22,13 +33,14 @@ export class Dashboard {
             notes: this.notes
         };
 
-        this.httpClient.fetch('http://iplanner.dev/api/ideas/store', {
+        this.httpClient.fetch('http://iplanner.dev/api/ideas', {
             method: "POST",
-            body: JSON.stringify(idea)
+            body: json(idea)
         })
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
+            .then(savedIdea => {
+                console.log(savedIdea);
+                this.ideas.push(savedIdea);
             });
     }
     
