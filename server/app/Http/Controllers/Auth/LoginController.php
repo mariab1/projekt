@@ -77,7 +77,7 @@ class LoginController extends Controller
      */
     private function getAuthToken($request)
     {
-        $response = (new Client())->post('http://iplanner.dev/oauth/token', [
+        $response = (new Client())->post(config('app.url') . '/oauth/token', [
             'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => '2',
