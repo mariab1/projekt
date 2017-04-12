@@ -58,6 +58,9 @@ export class Dashboard {
             .then(savedIdea => {
                 console.log(savedIdea);
                 this.ideas.push(savedIdea);
+                this.link = '';
+                this.price = '';
+                this.notes = '';
             });
     }
     
