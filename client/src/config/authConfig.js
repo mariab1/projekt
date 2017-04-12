@@ -6,7 +6,8 @@ let configForDevelopment = {
 
 let configForProduction = {
     loginRedirect: '#/dashboard',
-    baseUrl: 'http://iplanner.eleanor.ee'
+    baseUrl: 'http://iplanner.eleanor.ee',
+    profileUrl: '/api/user',
 };
 let config = configForProduction;
 if (window.location.hostname === 'localhost') {
