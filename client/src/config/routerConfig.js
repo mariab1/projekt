@@ -18,7 +18,9 @@ export default class {
                 { route: 'signup', name: 'signup', moduleId: 'signup/signup', nav: false },
                 { route: 'login', moduleId: 'login/login', title: 'Login', nav: false },
                 { route: 'logout', moduleId: 'logout/logout', title: 'Logout', nav: false },
-                { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', auth: true , nav: true }
+                { route: 'dashboard', name: 'dashboard', moduleId: 'dashboard/dashboard', auth: true , nav: true },
+                { route: 'project/create', name: 'project-create', moduleId: 'project/project', auth: true , nav: false },
+                { route: 'project/:id', name: 'project-view', moduleId: 'project/view', auth: true , nav: false }
             ]);
         };
         this.router.configure(appRouterConfig);

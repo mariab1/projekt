@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Idea extends Model
+class Project extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class Idea extends Model
      * @var array
      */
     protected $fillable = [
-        'link', 'price', 'notes', 'user_id', 'project_id'
+        'name', 'description', 'user_id'
     ];
 }

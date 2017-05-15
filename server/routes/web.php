@@ -22,5 +22,3 @@ Auth::routes();
  */
 Route::post('auth/login', 'Auth\LoginController@login');
 Route::post('auth/signup', 'Auth\RegisterController@register');
-
-Route::get('/home', 'HomeController@index');

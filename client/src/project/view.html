@@ -4,22 +4,26 @@
             <div class="column">
                 <h2>Hello, ${user.name}!</h2>
                 <a href="/#/project/create">Create a new project</a>
-                <p>Your projects:</p>
-                <ol>
+                <p>
+                    <h1>Current project:</h1>
+                    <p><b>Name:</b> ${project.name}</p>
+                    <p><b>Description:</b> ${project.description}</p>
+                </p>
+                <ul>
                     <li repeat.for="project of projects">
-                        <a route-href="route: project-view; params.bind: {id:project.id}">${project.name}</a>
+                        <a href="/#/project/${project.id}/view">${project.name}</a>
                     </li>
-                </ol>
+                </ul>
             </div>
         </div>
-        
+
         <div class="column box">
             <form submit.delegate="submitIdea()">
                 <p>Submit your interior idea</p>
                 <input type="file" name="fileToUpload">
-                <input placeholder="Add a link" value.bind="link">
-                <input placeholder="Price" value.bind="price">
-                <textarea placeholder="Add additional notes" value.bind="notes" rows="10"></textarea>
+                <input placeholder="Add a link" value.bind="idea.link">
+                <input placeholder="Price" value.bind="idea.price">
+                <textarea placeholder="Add additional notes" value.bind="idea.notes" rows="10"></textarea>
                 <button type="submit">Submit</button>
             </form>
         </div>

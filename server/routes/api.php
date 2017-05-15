@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('ideas', 'IdeaController');
+Route::resource('projects', 'ProjectController');
