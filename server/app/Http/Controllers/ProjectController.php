@@ -86,12 +86,17 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param $projectID
+     * @param $projectId
      *
      * @return mixed
      */
-    public function getIdeas($projectID)
+    public function getIdeas($projectId)
     {
-        return Idea::where('project_id', $projectID)->get();
+        return Idea::where('project_id', $projectId)->get();
+    }
+
+    public function getByUser($userId)
+    {
+        return Project::where('user_id', $userId)->get();
     }
 }

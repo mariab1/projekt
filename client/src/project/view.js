@@ -15,6 +15,8 @@ export class View {
     projects = [];
     project = {};
     ideas = [];
+    fileName;
+    file;
 
     constructor(auth, config) {
         this.auth = auth;
@@ -23,6 +25,12 @@ export class View {
 
         auth.getMe().then(data => {
             this.user = data;
+
+            this.httpClient.fetch(this.apiURL + '/projects/user/' + this.user.id)
+                .then(response => response.json())
+                .then(data => {
+                    this.projects = data;
+                });
         });
     }
 
@@ -43,18 +51,42 @@ export class View {
             });
     }
 
-    submitIdea() {
-        let idea = {
-            link: this.idea.link,
-            price: this.idea.price,
-            notes: this.idea.notes,
-            user_id: this.user.id,
-            project_id: this.project.id
-        };
+    deleteIdea(id) {
+        if (confirm('oled kindel, et soovid seda ideed kustutada?')) {
+            this.httpClient.fetch(this.apiURL + '/ideas/' + id, {
+                method: "DELETE"
+            })
+                .then(resp => {
+                    for (let i in this.ideas) {
+                        if (this.ideas[i].id === id) {
+                            this.ideas.splice(i, 1);
+                        }
+                    }
+                });
+        }
+    }
 
+    fileSelected(event) {
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.readAsDataURL(file);
+        this.fileName = file.name;
+        reader.onload = () => {
+            this.idea.file = reader.result;
+        };
+    }
+
+    submitIdea() {
         this.httpClient.fetch(this.apiURL + '/ideas', {
             method: "POST",
-            body: json(idea)
+            body: json({
+                link: this.idea.link,
+                price: this.idea.price,
+                notes: this.idea.notes,
+                user_id: this.user.id,
+                project_id: this.project.id,
+                file: this.idea.file
+            })
         })
             .then(response => response.json())
             .then(savedIdea => {
@@ -62,7 +94,8 @@ export class View {
                 this.idea = {
                     link: '',
                     price: '',
-                    notes: ''
+                    notes: '',
+                    file: ''
                 };
             });
     }

@@ -5,22 +5,21 @@
                 <h2>Hello, ${user.name}!</h2>
                 <a href="/#/project/create">Create a new project</a>
                 <p>
-                    <h1>Current project:</h1>
+                    <h2>Current project:</h2>
                     <p><b>Name:</b> ${project.name}</p>
                     <p><b>Description:</b> ${project.description}</p>
                 </p>
-                <ul>
-                    <li repeat.for="project of projects">
-                        <a href="/#/project/${project.id}/view">${project.name}</a>
-                    </li>
-                </ul>
+                <h3>Your projects:</h3>
+                <div repeat.for="project of projects">
+                    <a route-href="route: project-view; params.bind: {id:project.id}">${project.name}</a>
+                </div>
             </div>
         </div>
 
         <div class="column box">
             <form submit.delegate="submitIdea()">
                 <p>Submit your interior idea</p>
-                <input type="file" name="fileToUpload">
+                <input type="file" accept="image/*" change.delegate="fileSelected($event)">
                 <input placeholder="Add a link" value.bind="idea.link">
                 <input placeholder="Price" value.bind="idea.price">
                 <textarea placeholder="Add additional notes" value.bind="idea.notes" rows="10"></textarea>
@@ -34,6 +33,9 @@
                     <a href="${idea.link}" target="_blank" class="link">${idea.link}</a>
                 </div>
                 <div>${idea.notes}</div>
+                <div class="idea">
+                    <img src="${idea.file}">
+                </div>
                 <div class="text-right delete-item" click.delegate="deleteIdea(idea.id)">kustuta</div>
             </div>
         </div>

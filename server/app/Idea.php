@@ -12,6 +12,6 @@ class Idea extends Model
      * @var array
      */
     protected $fillable = [
-        'link', 'price', 'notes', 'user_id', 'project_id'
+        'link', 'price', 'notes', 'user_id', 'project_id', 'file'
     ];
 }
