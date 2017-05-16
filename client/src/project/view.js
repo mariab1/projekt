@@ -1,9 +1,9 @@
 import {inject} from 'aurelia-framework';
 import {AuthService} from 'aurelia-auth';
-
+import {AureliaConfiguration} from 'aurelia-configuration';
 import {HttpClient, json} from 'aurelia-fetch-client';
 
-@inject(AuthService)
+@inject(AuthService, AureliaConfiguration)
 
 export class View {
     idea = {
@@ -11,13 +11,15 @@ export class View {
         price: '',
         notes: ''
     };
+    apiURL;
     projects = [];
     project = {};
+    ideas = [];
 
-    constructor(auth) {
+    constructor(auth, config) {
         this.auth = auth;
+        this.apiURL = config.get('api.endpoint');
         this.httpClient = new HttpClient();
-        this.getData();
 
         auth.getMe().then(data => {
             this.user = data;
@@ -25,19 +27,18 @@ export class View {
     }
 
     activate(params) {
-        this.httpClient.fetch('http://iplanner.dev/api/projects/' + params.id)
+        this.httpClient.fetch(this.apiURL + '/projects/' + params.id)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 this.project = data;
+                this.loadIdeas();
             });
     }
 
-    getData() {
-        this.httpClient.fetch('http://iplanner.dev/api/projects')
+    loadIdeas() {
+        this.httpClient.fetch(this.apiURL + '/projects/' + this.project.id + '/ideas')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 this.ideas = data;
             });
     }
@@ -51,13 +52,12 @@ export class View {
             project_id: this.project.id
         };
 
-        this.httpClient.fetch('http://iplanner.dev/api/ideas', {
+        this.httpClient.fetch(this.apiURL + '/ideas', {
             method: "POST",
             body: json(idea)
         })
             .then(response => response.json())
             .then(savedIdea => {
-                console.log(savedIdea);
                 this.ideas.push(savedIdea);
                 this.idea = {
                     link: '',

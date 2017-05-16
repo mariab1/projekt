@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Idea;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -82,5 +83,15 @@ class ProjectController extends Controller
     {
         $project->delete();
         return response('ok');
+    }
+
+    /**
+     * @param $projectID
+     *
+     * @return mixed
+     */
+    public function getIdeas($projectID)
+    {
+        return Idea::where('project_id', $projectID)->get();
     }
 }

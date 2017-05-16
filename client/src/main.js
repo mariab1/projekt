@@ -14,11 +14,18 @@ export function configure(aurelia) {
     .feature('resources');
 
   if (environment.debug) {
-    aurelia.use.developmentLogging();
-  }
-
-  if (environment.testing) {
+    aurelia.use
+      .developmentLogging()
+      .plugin('aurelia-configuration', config => {
+        config.setEnvironment('development');
+      });
+  } else if (environment.testing) {
     aurelia.use.plugin('aurelia-testing');
+  } else {
+    aurelia.use
+      .plugin('aurelia-configuration', config => {
+        config.setEnvironment('production');
+      });
   }
 
   aurelia.use

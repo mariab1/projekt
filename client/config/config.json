@@ -1,0 +1,11 @@
+{
+  "name": "Iplanner",
+  "api": {
+    "endpoint": "http://iplanner.eleanor.ee/api"
+  },
+  "development": {
+    "api": {
+      "endpoint": "http://iplanner.dev/api"
+    }
+  }
+}
