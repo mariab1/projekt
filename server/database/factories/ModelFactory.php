@@ -26,6 +26,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->monthName,
-        'email' => $faker->text
+        'description' => $faker->text,
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        }
     ];
 });
