@@ -12,7 +12,6 @@ class IdeaController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->all();
         return Idea::all();
     }
 
