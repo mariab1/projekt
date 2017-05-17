@@ -52,7 +52,7 @@ export class View {
     }
 
     deleteIdea(id) {
-        if (confirm('oled kindel, et soovid seda ideed kustutada?')) {
+        if (confirm('Are you sure you want to delete this idea?')) {
             this.httpClient.fetch(this.apiURL + '/ideas/' + id, {
                 method: "DELETE"
             })
