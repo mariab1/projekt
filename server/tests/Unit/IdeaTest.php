@@ -5,11 +5,12 @@ namespace Tests\Unit;
 use App\Project;
 use Faker\Factory as Faker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class IdeaTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * A basic test example.
      *
